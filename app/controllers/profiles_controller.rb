@@ -1,4 +1,59 @@
 class ProfilesController < ApplicationController
-  def new
-  end
+  
+	  def index
+	  	redirect_to current_user.profile
+	  end
+
+	  def new
+	  	@profile = Profile.new
+	  end
+
+	  def edit
+	  	
+	  end
+
+	  def show
+	  	@post = @profile.user.posts
+	  end
+
+	  def create 
+	  	@posts = Profile.new(profile_params)
+	  	@post.user_id =current_user.id
+
+	  	respond_to do |format|
+	  		if @profile.save
+	  			format.html { redirect_to profiles_path, notice: 'Profile was created'}
+	  		else
+	  			format.html { render :new}
+	  		end
+	  	end
+	  end
+
+	  def update
+	  	respond_to do |format|
+	  		if @profile.update(profile_params)
+	  			format.html { redirect_to profiles_path, notice: 'Profile was updated'}
+	  		else
+	  			format.html { render :edit}
+	  		end
+	  	end
+	  end
+
+	  private
+	  	def set_profile
+	  		@profile = Profile.find(params[:id])
+	  	end
+
+	  	def profile_params
+	  		params.require(:profile).permit(:username, :avatar)
+	  	
+	  	end
 end
+	  
+
+
+
+
+
+
+
