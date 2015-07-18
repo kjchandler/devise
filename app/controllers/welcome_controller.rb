@@ -1,7 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-  end
-
-  def secret
+  	@post = Post.all.order('created_at desc')
   end
 end

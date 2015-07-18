@@ -1,5 +1,9 @@
 class ProfilesController < ApplicationController
-  
+	  skip_before_action :check_profile_exists, :only => [:new, :create]
+	  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+	  before_action :authenticate_user!
+
+
 	  def index
 	  	redirect_to current_user.profile
 	  end
